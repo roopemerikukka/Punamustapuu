@@ -10,11 +10,11 @@ package punamustapuu;
  */
 public class Solmu {
     
-    private static int avain;
-    private static int vari;
-    private static Solmu vanhempi;
-    private static Solmu vasen;
-    private static Solmu oikea;
+    private int avain;
+    private int vari;
+    private Solmu vanhempi;
+    private Solmu vasen;
+    private Solmu oikea;
     
     public Solmu(int avain){
         this.avain = avain;
