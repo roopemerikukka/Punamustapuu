@@ -22,6 +22,9 @@ public class Solmu {
      */
     public Solmu(int avain){
         this.avain = avain;
+        if (avain == 0) {
+            this.vari = 1;
+        }
     }
     
     /**
