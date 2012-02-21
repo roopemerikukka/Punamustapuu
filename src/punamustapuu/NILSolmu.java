@@ -3,7 +3,7 @@ package punamustapuu;
 
 /**
  *
- * @author Joonas
+ * @author Joonas Salovaara & Roope Merikukka
  */
 public class NILSolmu {
     private int vari;

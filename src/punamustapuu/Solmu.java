@@ -6,7 +6,7 @@ package punamustapuu;
 
 /**
  *
- * @author Roope
+ * @author Roope Merikukka & Joonas Salovaara
  */
 public class Solmu {
     
