@@ -16,6 +16,10 @@ public class Solmu {
     private Solmu vasen;
     private Solmu oikea;
     
+    /**
+     * if avain == 0 --> nil
+     * @param avain 
+     */
     public Solmu(int avain){
         this.avain = avain;
     }
