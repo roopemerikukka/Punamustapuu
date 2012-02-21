@@ -10,11 +10,11 @@ package punamustapuu;
  */
 public class Solmu {
     
-    private static int avain;
-    private static int vari;
-    private static Solmu vanhempi;
-    private static Solmu vasen;
-    private static Solmu oikea;
+    private int avain;
+    private int vari;
+    private Solmu vanhempi;
+    private Solmu vasen;
+    private Solmu oikea;
     
     public Solmu(int avain){
         this.avain = avain;
@@ -24,35 +24,39 @@ public class Solmu {
      * 1 == musta, 0 == punainen
      * @param vari 
      */
-    private void asetaVari(int vari) {
+    public void asetaVari(int vari) {
         this.vari = vari;
     }
     
-    private void asetaVasen(Solmu vasen) {
+    public void asetaVasen(Solmu vasen) {
         this.vasen = vasen;
     }
     
-    private void asetaOikea(Solmu oikea) {
+    public void asetaOikea(Solmu oikea) {
         this.oikea = oikea;
     }
     
-    private void asetaVanhempi(Solmu vanhempi) {
+    public void asetaVanhempi(Solmu vanhempi) {
         this.vanhempi = vanhempi;
     }
     
-    private int annaVari() {
+    public int annaAvain() {
+        return this.avain;
+    }
+    
+    public int annaVari() {
         return this.vari;
     }
     
-    private Solmu annaVasen() {
+    public Solmu annaVasen() {
         return this.vasen;
     }
     
-    private Solmu annaOikea() {
+    public Solmu annaOikea() {
         return this.oikea;
     }
     
-    private Solmu annaVanhempi() {
+    public Solmu annaVanhempi() {
         return this.vanhempi;
     }
 }

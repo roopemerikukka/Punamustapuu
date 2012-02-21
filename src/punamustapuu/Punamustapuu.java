@@ -14,6 +14,7 @@ public class Punamustapuu {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Solmu testi = new Solmu(42);
+        System.out.println(testi.annaAvain());
     }
 }
