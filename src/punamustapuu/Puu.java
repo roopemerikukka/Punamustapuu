@@ -85,12 +85,46 @@ public class Puu {
         this.juuri.asetaVari(1);
     }
     
-    public void vasenKierto(Solmu kierrettävä) {
-        
+    public void vasenKierto(Solmu kierrettava) {
+        Solmu y;
+        y = kierrettava.annaOikea();
+        kierrettava.asetaOikea(y.annaVasen());
+        if (y.annaVasen().annaAvain() != 0) {
+          y.annaVasen().asetaVanhempi(kierrettava);  
+        }
+        y.asetaVanhempi(kierrettava.annaVanhempi());
+        if (kierrettava.annaVanhempi().annaAvain() == 0) {
+            this.juuri = y;
+        }
+        else if (kierrettava == kierrettava.annaVanhempi().annaVasen()) {
+            kierrettava.annaVanhempi().asetaVasen(y);
+        }
+        else {
+            kierrettava.annaVanhempi().asetaOikea(y);
+        }
+        y.asetaVasen(kierrettava);
+        kierrettava.asetaVanhempi(y);
     }
     
-    public void oikeaKierto(Solmu kierrettävä) {
-        
+    public void oikeaKierto(Solmu kierrettava) {
+        Solmu y;
+        y = kierrettava.annaVasen();
+        kierrettava.asetaVasen(y.annaOikea());
+        if (y.annaOikea().annaAvain() != 0) {
+          y.annaOikea().asetaVanhempi(kierrettava);  
+        }
+        y.asetaVanhempi(kierrettava.annaVanhempi());
+        if (kierrettava.annaVanhempi().annaAvain() == 0) {
+            this.juuri = y;
+        }
+        else if (kierrettava == kierrettava.annaVanhempi().annaOikea()) {
+            kierrettava.annaVanhempi().asetaOikea(y);
+        }
+        else {
+            kierrettava.annaVanhempi().asetaVasen(y);
+        }
+        y.asetaOikea(kierrettava);
+        kierrettava.asetaVanhempi(y);
     }
     
 }
