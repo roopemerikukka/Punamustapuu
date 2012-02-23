@@ -47,7 +47,8 @@ public class Puu {
     
     // Vertailujen == syntaksia if ja while lauseissa täytyy miettiä, tuskin toimii,
     // sillä tarkistaa mielestäni tällähetkellä ainoastaan sitä, onko kyseessä täysin sama olio,
-    // joka ei ikinä siis ole tosi?
+    // joka ei ikinä siis ole tosi? Pitäisikö toteuttaa myös se Comparable-rajapinta?
+    // Vaihtuuko 2-tason else silmukassa vasen ja oikea päittäin vain annaVase/Oikea metodeissa vai myös kierroissa?
     public void korjaaLisays(Solmu korjattava) {
         Solmu y;
         while (korjattava.annaVanhempi().annaVari() == 0) {
@@ -64,11 +65,24 @@ public class Puu {
                     korjattava.annaVanhempi().asetaVari(1);
                     korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
                     oikeaKierto(korjattava.annaVanhempi().annaVanhempi());
-                } else {
-                    
+                }
+            } else {
+                y = korjattava.annaVanhempi().annaVanhempi().annaVasen();
+                if (y.annaVari() == 0) {
+                    korjattava.annaVanhempi().asetaVari(1);
+                    y.asetaVari(1);
+                    korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
+                    korjattava = korjattava.annaVanhempi().annaVanhempi();
+                } else if (korjattava == korjattava.annaVanhempi().annaVasen()) {
+                    korjattava = korjattava.annaVanhempi();
+                    oikeaKierto(korjattava);
+                    korjattava.annaVanhempi().asetaVari(1);
+                    korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
+                    vasenKierto(korjattava.annaVanhempi().annaVanhempi());
                 }
             }
         }
+        this.juuri.asetaVari(1);
     }
     
     public void vasenKierto(Solmu kierrettävä) {
