@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package punamustapuu;
+import java.util.List;
 
 /**
  *
@@ -14,19 +15,21 @@ public class Puu {
     
     public Puu(int avain){
         this.juuri = new Solmu(avain);
+        this.juuri.asetaVari(1);
     }
     
     // 1 = musta & 0 = punainen
     public void lisaaSolmu(int avain) {
+        System.out.println("Lisätään solmu: " + avain);
         Solmu uusi = new Solmu(avain);
-        Solmu y = new NILSolmu(0);
+        Solmu y = new Solmu("NIL");
         Solmu x = this.juuri;
         while (x.annaAvain() != 0) {
             y = x;
             if (uusi.annaAvain() < x.annaAvain()) {
-                x.asetaVasen(uusi);
+                x = x.annaVasen();
             } else {
-                x.asetaOikea(uusi);
+                x = x.annaOikea();
             }
         }
         uusi.asetaVanhempi(y);
@@ -39,10 +42,11 @@ public class Puu {
                 y.asetaOikea(uusi);
             }
         }
-        uusi.asetaVasen(new NILSolmu(0));
-        uusi.asetaOikea(new NILSolmu(0));
+        uusi.asetaVasen(new Solmu("NIL"));
+        uusi.asetaOikea(new Solmu("NIL"));
         uusi.asetaVari(0);
         korjaaLisays(uusi);
+        System.out.println("Solmu lisätty.");
     }
     
     // Vertailujen == syntaksia if ja while lauseissa täytyy miettiä, tuskin toimii,
@@ -50,16 +54,17 @@ public class Puu {
     // joka ei ikinä siis ole tosi? Pitäisikö toteuttaa myös se Comparable-rajapinta?
     // Vaihtuuko 2-tason else silmukassa vasen ja oikea päittäin vain annaVase/Oikea metodeissa vai myös kierroissa?
     public void korjaaLisays(Solmu korjattava) {
+        System.out.println("Korjataan solmun " + korjattava.annaAvain() + " perusteella...");
         Solmu y;
         while (korjattava.annaVanhempi().annaVari() == 0) {
-            if (korjattava.annaVanhempi() == korjattava.annaVanhempi().annaVanhempi().annaVasen()) {
+            if (korjattava.annaVanhempi().annaAvain() == korjattava.annaVanhempi().annaVanhempi().annaVasen().annaAvain()) {
                 y = korjattava.annaVanhempi().annaVanhempi().annaOikea();
                 if (y.annaVari() == 0) {
                     korjattava.annaVanhempi().asetaVari(1);
                     y.asetaVari(1);
                     korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
                     korjattava = korjattava.annaVanhempi().annaVanhempi();
-                } else if (korjattava == korjattava.annaVanhempi().annaOikea()) {
+                } else if (korjattava.annaAvain() == korjattava.annaVanhempi().annaOikea().annaAvain()) {
                     korjattava = korjattava.annaVanhempi();
                     vasenKierto(korjattava);
                     korjattava.annaVanhempi().asetaVari(1);
@@ -73,7 +78,7 @@ public class Puu {
                     y.asetaVari(1);
                     korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
                     korjattava = korjattava.annaVanhempi().annaVanhempi();
-                } else if (korjattava == korjattava.annaVanhempi().annaVasen()) {
+                } else if (korjattava.annaAvain() == korjattava.annaVanhempi().annaVasen().annaAvain()) {
                     korjattava = korjattava.annaVanhempi();
                     oikeaKierto(korjattava);
                     korjattava.annaVanhempi().asetaVari(1);
@@ -81,11 +86,14 @@ public class Puu {
                     vasenKierto(korjattava.annaVanhempi().annaVanhempi());
                 }
             }
+            System.out.println("Lisäyksen korjaus lopetettu.");
         }
         this.juuri.asetaVari(1);
+        System.out.println("Korjaus päättynyt.");
     }
     
     public void vasenKierto(Solmu kierrettava) {
+        System.out.println("Aloitetaan vasen kierto solmulle " + kierrettava.annaAvain() + "...");
         Solmu y;
         y = kierrettava.annaOikea();
         kierrettava.asetaOikea(y.annaVasen());
@@ -104,9 +112,12 @@ public class Puu {
         }
         y.asetaVasen(kierrettava);
         kierrettava.asetaVanhempi(y);
+        System.out.println("Vasen kierto lopetettu.");
     }
     
+    // Peilattu ylläolevastavaihtamalla kaikki oikea-sanat vasen-sanoiksi ja toisinpäin
     public void oikeaKierto(Solmu kierrettava) {
+        System.out.println("Aloitetaan oikea kierto solmulle " + kierrettava.annaAvain() + "...");
         Solmu y;
         y = kierrettava.annaVasen();
         kierrettava.asetaVasen(y.annaOikea());
@@ -125,6 +136,15 @@ public class Puu {
         }
         y.asetaOikea(kierrettava);
         kierrettava.asetaVanhempi(y);
+        System.out.println("Oikea kierto lopetettu.");
+    }
+    
+    public void tulostaPuu() {
+        List<Solmu> cache1 = null;
+        List<Solmu> cache2 = null;
+        cache1.add(this.juuri);
+        System.out.println(this.juuri);
+        
     }
     
 }
