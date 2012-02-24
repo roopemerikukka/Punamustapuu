@@ -14,7 +14,7 @@ public class Punamustapuu {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int[] luvut ={3, 8, 5, 6, 12, 4};
+        int[] luvut ={3, 8, 14, 5, 22, 1};
         
         System.out.println("Alustetaan puu alkiolla: " + luvut[0]);
         Puu puu = new Puu(luvut[0]);
@@ -23,7 +23,7 @@ public class Punamustapuu {
             puu.lisaaSolmu(luvut[i]);
         }
         
-        puu.tulostaPuu();
+
     }
     
 }

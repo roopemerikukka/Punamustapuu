@@ -22,7 +22,7 @@ public class Puu {
     public void lisaaSolmu(int avain) {
         System.out.println("Lisätään solmu: " + avain);
         Solmu uusi = new Solmu(avain);
-        Solmu y = new Solmu("NIL");
+        Solmu y = new Solmu(null);
         Solmu x = this.juuri;
         while (x.annaAvain() != 0) {
             y = x;
@@ -42,8 +42,8 @@ public class Puu {
                 y.asetaOikea(uusi);
             }
         }
-        uusi.asetaVasen(new Solmu("NIL"));
-        uusi.asetaOikea(new Solmu("NIL"));
+        uusi.asetaVasen(new Solmu(null));
+        uusi.asetaOikea(new Solmu(null));
         uusi.asetaVari(0);
         korjaaLisays(uusi);
         System.out.println("Solmu lisätty.");
@@ -67,10 +67,10 @@ public class Puu {
                 } else if (korjattava.annaAvain() == korjattava.annaVanhempi().annaOikea().annaAvain()) {
                     korjattava = korjattava.annaVanhempi();
                     vasenKierto(korjattava);
-                    korjattava.annaVanhempi().asetaVari(1);
-                    korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
-                    oikeaKierto(korjattava.annaVanhempi().annaVanhempi());
                 }
+                korjattava.annaVanhempi().asetaVari(1);
+                korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
+                oikeaKierto(korjattava.annaVanhempi().annaVanhempi());
             } else {
                 y = korjattava.annaVanhempi().annaVanhempi().annaVasen();
                 if (y.annaVari() == 0) {
@@ -81,10 +81,10 @@ public class Puu {
                 } else if (korjattava.annaAvain() == korjattava.annaVanhempi().annaVasen().annaAvain()) {
                     korjattava = korjattava.annaVanhempi();
                     oikeaKierto(korjattava);
-                    korjattava.annaVanhempi().asetaVari(1);
-                    korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
-                    vasenKierto(korjattava.annaVanhempi().annaVanhempi());
                 }
+                korjattava.annaVanhempi().asetaVari(1);
+                korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
+                vasenKierto(korjattava.annaVanhempi().annaVanhempi());
             }
             System.out.println("Lisäyksen korjaus lopetettu.");
         }
@@ -94,17 +94,16 @@ public class Puu {
     
     public void vasenKierto(Solmu kierrettava) {
         System.out.println("Aloitetaan vasen kierto solmulle " + kierrettava.annaAvain() + "...");
-        Solmu y;
-        y = kierrettava.annaOikea();
+        Solmu y = kierrettava.annaOikea();
         kierrettava.asetaOikea(y.annaVasen());
-        if (y.annaVasen().annaAvain() != 0) {
+        if (y.annaVasen() != null) {
           y.annaVasen().asetaVanhempi(kierrettava);  
         }
         y.asetaVanhempi(kierrettava.annaVanhempi());
-        if (kierrettava.annaVanhempi().annaAvain() == 0) {
+        if (kierrettava.annaVanhempi() == null) {
             this.juuri = y;
         }
-        else if (kierrettava == kierrettava.annaVanhempi().annaVasen()) {
+        else if (kierrettava.annaAvain() == kierrettava.annaVanhempi().annaVasen().annaAvain()) {
             kierrettava.annaVanhempi().asetaVasen(y);
         }
         else {
@@ -118,17 +117,16 @@ public class Puu {
     // Peilattu ylläolevastavaihtamalla kaikki oikea-sanat vasen-sanoiksi ja toisinpäin
     public void oikeaKierto(Solmu kierrettava) {
         System.out.println("Aloitetaan oikea kierto solmulle " + kierrettava.annaAvain() + "...");
-        Solmu y;
-        y = kierrettava.annaVasen();
+        Solmu y = kierrettava.annaVasen();
         kierrettava.asetaVasen(y.annaOikea());
-        if (y.annaOikea().annaAvain() != 0) {
+        if (y.annaOikea() != null) {
           y.annaOikea().asetaVanhempi(kierrettava);  
         }
         y.asetaVanhempi(kierrettava.annaVanhempi());
-        if (kierrettava.annaVanhempi().annaAvain() == 0) {
+        if (kierrettava.annaVanhempi() == null) {
             this.juuri = y;
         }
-        else if (kierrettava == kierrettava.annaVanhempi().annaOikea()) {
+        else if (kierrettava.annaAvain() == kierrettava.annaVanhempi().annaOikea().annaAvain()) {
             kierrettava.annaVanhempi().asetaOikea(y);
         }
         else {

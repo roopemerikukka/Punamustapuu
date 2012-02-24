@@ -22,13 +22,13 @@ public class Solmu {
      */
     public Solmu(int avain){
         this.avain = avain;
-        this.vasen = new Solmu("NIL");
-        this.oikea = new Solmu("NIL");
+        this.vasen = new Solmu(null);
+        this.oikea = new Solmu(null);
         this.vari = 0;
     }
     
     public Solmu(String NIL) {
-        if (NIL.contains("NIL")) {
+        if (NIL == null) {
             this.avain = 0;
             this.vari = 1;
         }
