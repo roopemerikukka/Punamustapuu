@@ -24,7 +24,7 @@ public class Puu {
         Solmu uusi = new Solmu(avain);
         Solmu y = new Solmu(null);
         Solmu x = this.juuri;
-        while (x.annaAvain() != 0) {
+        while (x != null) {
             y = x;
             if (uusi.annaAvain() < x.annaAvain()) {
                 x = x.annaVasen();
@@ -33,7 +33,7 @@ public class Puu {
             }
         }
         uusi.asetaVanhempi(y);
-        if (y.annaAvain() == 0) {
+        if (y == null) {
             this.juuri = uusi;
         } else {
             if (uusi.annaAvain() < y.annaAvain()) {
