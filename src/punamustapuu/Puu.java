@@ -137,12 +137,24 @@ public class Puu {
         System.out.println("Oikea kierto lopetettu.");
     }
     
-    public void tulostaPuu() {
-        List<Solmu> cache1 = null;
-        List<Solmu> cache2 = null;
-        cache1.add(this.juuri);
-        System.out.println(this.juuri);
-        
+    public Solmu annaJuuri(){
+        return this.juuri;
+    }
+    
+    public void tulostaPuu(Solmu s) {
+        System.out.print(s.annaAvain());
+        if(s.annaVari() == 1){
+            System.out.print(" musta\n");
+        }else{
+            System.out.print(" punainen\n");
+        }
+        if(s.annaOikea()!=null){
+            tulostaPuu(s.annaOikea());
+        }
+        if(s.annaVasen()!=null){
+            tulostaPuu(s.annaVasen());
+        }
+        System.out.println("-");
     }
     
 }

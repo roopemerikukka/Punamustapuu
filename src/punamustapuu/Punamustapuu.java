@@ -21,7 +21,10 @@ public class Punamustapuu {
         
         for (int i = 1; i < luvut.length; i++) {
             puu.lisaaSolmu(luvut[i]);
+            puu.tulostaPuu(puu.annaJuuri());
+            System.out.println("--");
         }
+        
         
 
     }
