@@ -73,4 +73,12 @@ public class Solmu {
     public Solmu annaVanhempi() {
         return this.vanhempi;
     }
+    
+    public String annaVarinNimi(){
+        if(this.annaVari()==1){
+            return "musta";
+        }else{
+            return "punainen";
+        }
+    }
 }
