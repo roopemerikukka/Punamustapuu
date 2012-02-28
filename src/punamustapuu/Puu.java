@@ -261,22 +261,35 @@ public class Puu {
         }
     }
     
+    private static final int SISENNYS_ASKEL = 6;
     
+    public void tulostaPuu(){
+        apuTulostus(annaJuuri(), 0);
+    }
     
-    public void tulostaPuu(Solmu s) {
-        System.out.print(s.annaAvain());
-        if(s.annaVari() == 1){
-            System.out.print(" MUSTA\n");
-        }else{
-            System.out.print(" PUNAINEN\n");
+    public void apuTulostus(Solmu s, int sisennys){
+        if(s == null){
+            System.out.println("<tyhjä puu>");
+            return;
         }
-        if(s.annaOikea()!=null){
-            tulostaPuu(s.annaOikea());
+        if(s.annaOikea() != null){
+            apuTulostus(s.annaOikea(), sisennys + SISENNYS_ASKEL);
         }
-        if(s.annaVasen()!=null){
-            tulostaPuu(s.annaVasen());
+        for(int i = 0; i < sisennys; i++){
+            System.out.print(" ");
         }
-        System.out.println("-");
+        if(s.annaVari() == MUSTA){
+            if(s.annaAvain() == 0){
+                System.out.println("(NIL)");
+            } else {
+                System.out.println("(" + s.annaAvain() + "M)");
+            }
+        } else {
+            System.out.println("(" + s.annaAvain() + "P)");
+        }
+        if(s.annaVasen() != null){
+            apuTulostus(s.annaVasen(), sisennys + SISENNYS_ASKEL);
+        }
     }
     
 }

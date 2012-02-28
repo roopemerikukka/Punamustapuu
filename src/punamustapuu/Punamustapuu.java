@@ -22,18 +22,16 @@ public class Punamustapuu {
         
         for (int i = 0; i < luvut.length; i++) {
             puu.lisaaSolmu(luvut[i]);
-            puu.tulostaPuu(puu.annaJuuri());
         }
+        puu.tulostaPuu();
         
         System.out.println("Aloitetaan 3 poisto...");
         puu.poistaSolmu(puu.annaJuuri().annaOikea());
         System.out.println("3 poistettu! Tulostetaan puu...");
-        puu.tulostaPuu(puu.annaJuuri());
         
         System.out.println("Aloitetaan juuren poisto...");
         puu.poistaSolmu(puu.annaJuuri());
         System.out.println("Juuri poistettu! Tulostetaan puu...");
-        puu.tulostaPuu(puu.annaJuuri());
     }
     
 }
