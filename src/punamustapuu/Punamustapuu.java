@@ -28,10 +28,12 @@ public class Punamustapuu {
         System.out.println("Aloitetaan 3 poisto...");
         puu.poistaSolmu(puu.annaJuuri().annaOikea());
         System.out.println("3 poistettu! Tulostetaan puu...");
+        puu.tulostaPuu();
         
         System.out.println("Aloitetaan juuren poisto...");
         puu.poistaSolmu(puu.annaJuuri());
         System.out.println("Juuri poistettu! Tulostetaan puu...");
+        puu.tulostaPuu();
     }
     
 }
