@@ -10,56 +10,34 @@ package punamustapuu;
  */
 public class Solmu {
     
-    private int avain;
-    private int vari;
+    private Comparable<Integer> avain;
     private Solmu vanhempi;
     private Solmu vasen;
     private Solmu oikea;
+    private int vari;
+    private final int MUSTA = 1;
+    private final int PUNAINEN = 0;
     
-    /**
-     * if avain == 0 --> nil
-     * @param avain 
-     */
-    public Solmu(int avain){
+    // Konstruktorit
+    public Solmu(Comparable avain, Solmu vasen, Solmu oikea) {
         this.avain = avain;
-        this.vasen = new Solmu(null);
-        this.oikea = new Solmu(null);
-        this.vari = 0;
-    }
-    
-    public Solmu(String NIL) {
-        if (NIL == null) {
-            this.avain = 0;
-            this.vari = 1;
-        }
-    }
-    
-    /**
-     * 1 == musta, 0 == punainen
-     * @param vari 
-     */
-    public void asetaVari(int vari) {
-        this.vari = vari;
-    }
-    
-    public void asetaVasen(Solmu vasen) {
+        this.vanhempi = null;
         this.vasen = vasen;
-    }
-    
-    public void asetaOikea(Solmu oikea) {
         this.oikea = oikea;
+        this.vari = this.MUSTA;
     }
     
-    public void asetaVanhempi(Solmu vanhempi) {
-        this.vanhempi = vanhempi;
+    public Solmu(Comparable avain) {
+        this(avain, null, null);
     }
     
-    public int annaAvain() {
+    // Antajat
+    public Comparable annaAvain() {
         return this.avain;
     }
     
-    public int annaVari() {
-        return this.vari;
+    public Solmu annaVanhempi() {
+        return this.vanhempi;
     }
     
     public Solmu annaVasen() {
@@ -70,15 +48,28 @@ public class Solmu {
         return this.oikea;
     }
     
-    public Solmu annaVanhempi() {
-        return this.vanhempi;
+    public int annaVari() {
+        return this.vari;
     }
     
-    public String annaVarinNimi(){
-        if(this.annaVari()==1){
-            return "musta";
-        }else{
-            return "punainen";
-        }
+    // Asettajat
+    public void asetaAvain(Comparable uusiAvain) {
+        this.avain = uusiAvain;
+    }
+    
+    public void asetaVanhempi(Solmu uusiVanhempi) {
+        this.vanhempi = uusiVanhempi;
+    }
+    
+    public void asetaVasen(Solmu uusiVasen) {
+        this.vasen = uusiVasen;
+    }
+    
+    public void asetaOikea(Solmu uusiOikea) {
+        this.oikea = uusiOikea;
+    }
+    
+    public void asetaVari(int uusiVari) {
+        this.vari = uusiVari;
     }
 }

@@ -14,7 +14,8 @@ public class Punamustapuu {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int[] luvut ={3, 8, 14, 5, 22, 1, 18, 5};
+        
+        int[] luvut ={1, 2, 3};
         
         System.out.println("Alustetaan puu alkiolla: " + luvut[0]);
         Puu puu = new Puu(luvut[0]);

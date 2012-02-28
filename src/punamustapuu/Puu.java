@@ -12,31 +12,32 @@ import java.util.List;
 public class Puu {
     
     private Solmu juuri;
+    private final int MUSTA = 1;
+    private final int PUNAINEN = 0;
     
-    public Puu(int avain){
-        this.juuri = new Solmu(avain);
-        this.juuri.asetaVari(1);
+    public Puu(int juurenAvain){
+        this.juuri = new Solmu(juurenAvain);
     }
     
-    // 1 = musta & 0 = punainen
     public void lisaaSolmu(int avain) {
         System.out.println("Lisätään solmu: " + avain);
         Solmu uusi = new Solmu(avain);
         Solmu y = new Solmu(null);
         Solmu x = this.juuri;
-        while (x != null) {
+        System.out.println(this.juuri.annaAvain() + " " + this.juuri.annaAvain());
+        while (x.annaAvain() != null) {
             y = x;
-            if (uusi.annaAvain() < x.annaAvain()) {
+            if (uusi.annaAvain().compareTo(x.annaAvain()) < 0) {
                 x = x.annaVasen();
             } else {
                 x = x.annaOikea();
             }
         }
         uusi.asetaVanhempi(y);
-        if (y == null) {
+        if (y.annaAvain() == null) {
             this.juuri = uusi;
         } else {
-            if (uusi.annaAvain() < y.annaAvain()) {
+            if (uusi.annaAvain().compareTo(y.annaAvain()) < 0) {
                 y.asetaVasen(uusi);
             } else {
                 y.asetaOikea(uusi);
@@ -44,7 +45,7 @@ public class Puu {
         }
         uusi.asetaVasen(new Solmu(null));
         uusi.asetaOikea(new Solmu(null));
-        uusi.asetaVari(0);
+        uusi.asetaVari(PUNAINEN);
         korjaaLisays(uusi);
         System.out.println("Solmu lisätty.");
     }
@@ -56,39 +57,39 @@ public class Puu {
     public void korjaaLisays(Solmu korjattava) {
         System.out.println("Korjataan solmun " + korjattava.annaAvain() + " perusteella...");
         Solmu y;
-        while (korjattava.annaVanhempi().annaVari() == 0) {
+        while (korjattava.annaVanhempi().annaVari() == PUNAINEN) {
             if (korjattava.annaVanhempi().annaAvain() == korjattava.annaVanhempi().annaVanhempi().annaVasen().annaAvain()) {
                 y = korjattava.annaVanhempi().annaVanhempi().annaOikea();
-                if (y.annaVari() == 0) {
-                    korjattava.annaVanhempi().asetaVari(1);
-                    y.asetaVari(1);
-                    korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
+                if (y.annaVari() == PUNAINEN) {
+                    korjattava.annaVanhempi().asetaVari(MUSTA);
+                    y.asetaVari(MUSTA);
+                    korjattava.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
                     korjattava = korjattava.annaVanhempi().annaVanhempi();
                 } else if (korjattava.annaAvain() == korjattava.annaVanhempi().annaOikea().annaAvain()) {
                     korjattava = korjattava.annaVanhempi();
                     vasenKierto(korjattava);
                 }
-                korjattava.annaVanhempi().asetaVari(1);
-                korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
+                korjattava.annaVanhempi().asetaVari(MUSTA);
+                korjattava.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
                 oikeaKierto(korjattava.annaVanhempi().annaVanhempi());
             } else {
                 y = korjattava.annaVanhempi().annaVanhempi().annaVasen();
-                if (y.annaVari() == 0) {
-                    korjattava.annaVanhempi().asetaVari(1);
-                    y.asetaVari(1);
-                    korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
+                if (y.annaVari() == PUNAINEN) {
+                    korjattava.annaVanhempi().asetaVari(MUSTA);
+                    y.asetaVari(MUSTA);
+                    korjattava.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
                     korjattava = korjattava.annaVanhempi().annaVanhempi();
                 } else if (korjattava.annaAvain() == korjattava.annaVanhempi().annaVasen().annaAvain()) {
                     korjattava = korjattava.annaVanhempi();
                     oikeaKierto(korjattava);
                 }
-                korjattava.annaVanhempi().asetaVari(1);
-                korjattava.annaVanhempi().annaVanhempi().asetaVari(0);
+                korjattava.annaVanhempi().asetaVari(MUSTA);
+                korjattava.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
                 vasenKierto(korjattava.annaVanhempi().annaVanhempi());
             }
             System.out.println("Lisäyksen korjaus lopetettu.");
         }
-        this.juuri.asetaVari(1);
+        this.juuri.asetaVari(MUSTA);
         System.out.println("Korjaus päättynyt.");
     }
     
@@ -96,11 +97,11 @@ public class Puu {
         System.out.println("Aloitetaan vasen kierto solmulle " + kierrettava.annaAvain() + "...");
         Solmu y = kierrettava.annaOikea();
         kierrettava.asetaOikea(y.annaVasen());
-        if (y.annaVasen() != null) {
+        if (y.annaVasen().annaAvain() != null) {
           y.annaVasen().asetaVanhempi(kierrettava);  
         }
         y.asetaVanhempi(kierrettava.annaVanhempi());
-        if (kierrettava.annaVanhempi() == null) {
+        if (kierrettava.annaVanhempi().annaAvain() == null) {
             this.juuri = y;
         }
         else if (kierrettava.annaAvain() == kierrettava.annaVanhempi().annaVasen().annaAvain()) {
@@ -119,11 +120,11 @@ public class Puu {
         System.out.println("Aloitetaan oikea kierto solmulle " + kierrettava.annaAvain() + "...");
         Solmu y = kierrettava.annaVasen();
         kierrettava.asetaVasen(y.annaOikea());
-        if (y.annaOikea() != null) {
+        if (y.annaOikea().annaAvain() != null) {
           y.annaOikea().asetaVanhempi(kierrettava);  
         }
         y.asetaVanhempi(kierrettava.annaVanhempi());
-        if (kierrettava.annaVanhempi() == null) {
+        if (kierrettava.annaVanhempi().annaAvain() == null) {
             this.juuri = y;
         }
         else if (kierrettava.annaAvain() == kierrettava.annaVanhempi().annaOikea().annaAvain()) {
@@ -144,9 +145,9 @@ public class Puu {
     public void tulostaPuu(Solmu s) {
         System.out.print(s.annaAvain());
         if(s.annaVari() == 1){
-            System.out.print(" musta\n");
+            System.out.print(" MUSTA\n");
         }else{
-            System.out.print(" punainen\n");
+            System.out.print(" PUNAINEN\n");
         }
         if(s.annaOikea()!=null){
             tulostaPuu(s.annaOikea());
