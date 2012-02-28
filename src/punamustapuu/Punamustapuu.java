@@ -22,11 +22,10 @@ public class Punamustapuu {
         
         for (int i = 0; i < luvut.length; i++) {
             puu.lisaaSolmu(luvut[i]);
+            System.out.println();
+            puu.tulostaPuu();
+            System.out.println();
         }
-        
-        System.out.println();
-        puu.tulostaPuu();
-        System.out.println();
         
         System.out.println("Aloitetaan 3 poisto...");
         puu.poistaSolmu(puu.annaJuuri().annaOikea());

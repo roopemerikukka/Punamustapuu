@@ -21,7 +21,7 @@ public class Puu {
     
     // INT ONLY, EIKÄ NOLLAA!
     public void lisaaSolmu(int avain) {
-        System.out.println("Lisätään solmu: " + avain);
+        System.out.println("Aloitetaan solmun " + avain + " lisääminen...");
         Solmu uusi = new Solmu(avain);
         Solmu y = new Solmu();
         Solmu x = this.juuri;
@@ -55,7 +55,7 @@ public class Puu {
     // joka ei ikinä siis ole tosi? Pitäisikö toteuttaa myös se Comparable-rajapinta?
     // Vaihtuuko 2-tason else silmukassa vasen ja oikea päittäin vain annaVase/Oikea metodeissa vai myös kierroissa?
     private void korjaaLisays(Solmu z) {
-        System.out.println("Aloitetaan korjaus solmulle: " + z.annaAvain());
+        System.out.println("Korjataan lisäys solmulle " + z.annaAvain() + "...");
         Solmu y;
         while (z.annaVanhempi().annaVari() == PUNAINEN) {
             if (z.annaVanhempi().annaAvain() == z.annaVanhempi().annaVanhempi().annaVasen().annaAvain()) {
@@ -96,6 +96,7 @@ public class Puu {
             }
         }
         this.juuri.asetaVari(MUSTA);
+        System.out.println("Korjaus solmulle " + z.annaAvain() + " valmis.");
     }
     
     private void vasenKierto(Solmu x) {
