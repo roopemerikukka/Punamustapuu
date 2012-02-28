@@ -15,15 +15,14 @@ public class Punamustapuu {
      */
     public static void main(String[] args) {
         
-        int[] luvut ={1, 2, 3};
+        int[] luvut ={1, 2, 3, 4};
         
         System.out.println("Alustetaan puu alkiolla: " + luvut[0]);
-        Puu puu = new Puu(luvut[0]);
+        Puu puu = new Puu();
         
-        for (int i = 1; i < luvut.length; i++) {
+        for (int i = 0; i < luvut.length; i++) {
             puu.lisaaSolmu(luvut[i]);
             puu.tulostaPuu(puu.annaJuuri());
-            System.out.println("--");
         }
     }
     

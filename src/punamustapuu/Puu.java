@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package punamustapuu;
-import java.util.List;
 
 /**
  *
@@ -11,40 +10,41 @@ import java.util.List;
  */
 public class Puu {
     
-    private Solmu juuri;
+    private Solmu juuri = new Solmu();
     private final int MUSTA = 1;
     private final int PUNAINEN = 0;
     
-    public Puu(int juurenAvain){
-        this.juuri = new Solmu(juurenAvain);
+    // Tyhjän puun konstruktori
+    public Puu(){
+        
     }
     
+    // INT ONLY, EIKÄ NOLLAA!
     public void lisaaSolmu(int avain) {
         System.out.println("Lisätään solmu: " + avain);
         Solmu uusi = new Solmu(avain);
-        Solmu y = new Solmu(null);
+        Solmu y = new Solmu();
         Solmu x = this.juuri;
-        System.out.println(this.juuri.annaAvain() + " " + this.juuri.annaAvain());
-        while (x.annaAvain() != null) {
+        while (x.annaAvain() != 0) {
             y = x;
-            if (uusi.annaAvain().compareTo(x.annaAvain()) < 0) {
+            if (uusi.annaAvain() < x.annaAvain()) {
                 x = x.annaVasen();
             } else {
                 x = x.annaOikea();
             }
         }
         uusi.asetaVanhempi(y);
-        if (y.annaAvain() == null) {
+        if (y.annaAvain() == 0) {
             this.juuri = uusi;
         } else {
-            if (uusi.annaAvain().compareTo(y.annaAvain()) < 0) {
+            if (uusi.annaAvain() < y.annaAvain()) {
                 y.asetaVasen(uusi);
             } else {
                 y.asetaOikea(uusi);
             }
         }
-        uusi.asetaVasen(new Solmu(null));
-        uusi.asetaOikea(new Solmu(null));
+        uusi.asetaVasen(new Solmu());
+        uusi.asetaOikea(new Solmu());
         uusi.asetaVari(PUNAINEN);
         korjaaLisays(uusi);
         System.out.println("Solmu lisätty.");
@@ -54,64 +54,69 @@ public class Puu {
     // sillä tarkistaa mielestäni tällähetkellä ainoastaan sitä, onko kyseessä täysin sama olio,
     // joka ei ikinä siis ole tosi? Pitäisikö toteuttaa myös se Comparable-rajapinta?
     // Vaihtuuko 2-tason else silmukassa vasen ja oikea päittäin vain annaVase/Oikea metodeissa vai myös kierroissa?
-    public void korjaaLisays(Solmu korjattava) {
-        System.out.println("Korjataan solmun " + korjattava.annaAvain() + " perusteella...");
+    public void korjaaLisays(Solmu z) {
+        System.out.println("Aloitetaan korjaus solmulle: " + z.annaAvain());
         Solmu y;
-        while (korjattava.annaVanhempi().annaVari() == PUNAINEN) {
-            if (korjattava.annaVanhempi().annaAvain() == korjattava.annaVanhempi().annaVanhempi().annaVasen().annaAvain()) {
-                y = korjattava.annaVanhempi().annaVanhempi().annaOikea();
+        while (z.annaVanhempi().annaVari() == PUNAINEN) {
+            if (z.annaVanhempi().annaAvain() == z.annaVanhempi().annaVanhempi().annaVasen().annaAvain()) {
+                y = z.annaVanhempi().annaVanhempi().annaOikea();
                 if (y.annaVari() == PUNAINEN) {
-                    korjattava.annaVanhempi().asetaVari(MUSTA);
+                    z.annaVanhempi().asetaVari(MUSTA);
                     y.asetaVari(MUSTA);
-                    korjattava.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
-                    korjattava = korjattava.annaVanhempi().annaVanhempi();
-                } else if (korjattava.annaAvain() == korjattava.annaVanhempi().annaOikea().annaAvain()) {
-                    korjattava = korjattava.annaVanhempi();
-                    vasenKierto(korjattava);
+                    z.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
+                    z = z.annaVanhempi().annaVanhempi();
                 }
-                korjattava.annaVanhempi().asetaVari(MUSTA);
-                korjattava.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
-                oikeaKierto(korjattava.annaVanhempi().annaVanhempi());
+                else {
+                    if (z.annaAvain() == z.annaVanhempi().annaOikea().annaAvain()) {
+                        z = z.annaVanhempi();
+                        vasenKierto(z);
+                    }
+                    z.annaVanhempi().asetaVari(MUSTA);
+                    z.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
+                    oikeaKierto(z.annaVanhempi().annaVanhempi());
+                } 
+                    
             } else {
-                y = korjattava.annaVanhempi().annaVanhempi().annaVasen();
+                y = z.annaVanhempi().annaVanhempi().annaVasen();
                 if (y.annaVari() == PUNAINEN) {
-                    korjattava.annaVanhempi().asetaVari(MUSTA);
+                    z.annaVanhempi().asetaVari(MUSTA);
                     y.asetaVari(MUSTA);
-                    korjattava.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
-                    korjattava = korjattava.annaVanhempi().annaVanhempi();
-                } else if (korjattava.annaAvain() == korjattava.annaVanhempi().annaVasen().annaAvain()) {
-                    korjattava = korjattava.annaVanhempi();
-                    oikeaKierto(korjattava);
+                    z.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
+                    z = z.annaVanhempi().annaVanhempi();
                 }
-                korjattava.annaVanhempi().asetaVari(MUSTA);
-                korjattava.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
-                vasenKierto(korjattava.annaVanhempi().annaVanhempi());
+                else {
+                    if (z.annaAvain() == z.annaVanhempi().annaVasen().annaAvain()) {
+                        z = z.annaVanhempi();
+                        oikeaKierto(z);
+                    }
+                    z.annaVanhempi().asetaVari(MUSTA);
+                    z.annaVanhempi().annaVanhempi().asetaVari(PUNAINEN);
+                    vasenKierto(z.annaVanhempi().annaVanhempi());
+                }
             }
-            System.out.println("Lisäyksen korjaus lopetettu.");
         }
         this.juuri.asetaVari(MUSTA);
-        System.out.println("Korjaus päättynyt.");
     }
     
-    public void vasenKierto(Solmu kierrettava) {
-        System.out.println("Aloitetaan vasen kierto solmulle " + kierrettava.annaAvain() + "...");
-        Solmu y = kierrettava.annaOikea();
-        kierrettava.asetaOikea(y.annaVasen());
-        if (y.annaVasen().annaAvain() != null) {
-          y.annaVasen().asetaVanhempi(kierrettava);  
+    public void vasenKierto(Solmu x) {
+        System.out.println("Aloitetaan vasen kierto solmulle " + x.annaAvain() + "...");
+        Solmu y = x.annaOikea();
+        x.asetaOikea(y.annaVasen());
+        if (y.annaVasen().annaAvain() != 0) {
+          y.annaVasen().asetaVanhempi(x);  
         }
-        y.asetaVanhempi(kierrettava.annaVanhempi());
-        if (kierrettava.annaVanhempi().annaAvain() == null) {
+        y.asetaVanhempi(x.annaVanhempi());
+        if (x.annaVanhempi().annaAvain() == 0) {
             this.juuri = y;
         }
-        else if (kierrettava.annaAvain() == kierrettava.annaVanhempi().annaVasen().annaAvain()) {
-            kierrettava.annaVanhempi().asetaVasen(y);
+        else if (x.annaAvain() == x.annaVanhempi().annaVasen().annaAvain()) {
+            x.annaVanhempi().asetaVasen(y);
         }
         else {
-            kierrettava.annaVanhempi().asetaOikea(y);
+            x.annaVanhempi().asetaOikea(y);
         }
-        y.asetaVasen(kierrettava);
-        kierrettava.asetaVanhempi(y);
+        y.asetaVasen(x);
+        x.asetaVanhempi(y);
         System.out.println("Vasen kierto lopetettu.");
     }
     
@@ -120,11 +125,11 @@ public class Puu {
         System.out.println("Aloitetaan oikea kierto solmulle " + kierrettava.annaAvain() + "...");
         Solmu y = kierrettava.annaVasen();
         kierrettava.asetaVasen(y.annaOikea());
-        if (y.annaOikea().annaAvain() != null) {
+        if (y.annaOikea().annaAvain() != 0) {
           y.annaOikea().asetaVanhempi(kierrettava);  
         }
         y.asetaVanhempi(kierrettava.annaVanhempi());
-        if (kierrettava.annaVanhempi().annaAvain() == null) {
+        if (kierrettava.annaVanhempi().annaAvain() == 0) {
             this.juuri = y;
         }
         else if (kierrettava.annaAvain() == kierrettava.annaVanhempi().annaOikea().annaAvain()) {

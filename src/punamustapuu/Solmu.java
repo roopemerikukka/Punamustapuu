@@ -10,7 +10,7 @@ package punamustapuu;
  */
 public class Solmu {
     
-    private Comparable<Integer> avain;
+    private int avain;
     private Solmu vanhempi;
     private Solmu vasen;
     private Solmu oikea;
@@ -19,20 +19,25 @@ public class Solmu {
     private final int PUNAINEN = 0;
     
     // Konstruktorit
-    public Solmu(Comparable avain, Solmu vasen, Solmu oikea) {
+    public Solmu(int avain) {
         this.avain = avain;
         this.vanhempi = null;
-        this.vasen = vasen;
-        this.oikea = oikea;
+        this.vasen = null;
+        this.oikea = null;
+        this.vari = this.PUNAINEN;
+    }
+    
+    // NOLLA ON NIL, NÄIN.
+    public Solmu() {
+        this.avain = 0;
+        this.vanhempi = null;
+        this.vasen = null;
+        this.oikea = null;
         this.vari = this.MUSTA;
     }
     
-    public Solmu(Comparable avain) {
-        this(avain, null, null);
-    }
-    
     // Antajat
-    public Comparable annaAvain() {
+    public int annaAvain() {
         return this.avain;
     }
     
@@ -53,7 +58,7 @@ public class Solmu {
     }
     
     // Asettajat
-    public void asetaAvain(Comparable uusiAvain) {
+    public void asetaAvain(int uusiAvain) {
         this.avain = uusiAvain;
     }
     
