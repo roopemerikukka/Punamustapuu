@@ -282,10 +282,10 @@ public class Puu {
             if(s.annaAvain() == 0){
                 System.out.println("(NIL)");
             } else {
-                System.out.println("(" + s.annaAvain() + "M)");
+                System.out.println("(" + s.annaAvain() + "M) <");
             }
         } else {
-            System.out.println("(" + s.annaAvain() + "P)");
+            System.out.println("(" + s.annaAvain() + "P) <");
         }
         if(s.annaVasen() != null){
             apuTulostus(s.annaVasen(), sisennys + SISENNYS_ASKEL);
