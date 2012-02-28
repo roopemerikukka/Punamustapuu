@@ -261,6 +261,8 @@ public class Puu {
         }
     }
     
+    
+    
     public void tulostaPuu(Solmu s) {
         System.out.print(s.annaAvain());
         if(s.annaVari() == 1){

@@ -78,3 +78,5 @@ public class Solmu {
         this.vari = uusiVari;
     }
 }
+
+
