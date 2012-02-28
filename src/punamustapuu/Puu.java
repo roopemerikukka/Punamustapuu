@@ -54,7 +54,7 @@ public class Puu {
     // sillä tarkistaa mielestäni tällähetkellä ainoastaan sitä, onko kyseessä täysin sama olio,
     // joka ei ikinä siis ole tosi? Pitäisikö toteuttaa myös se Comparable-rajapinta?
     // Vaihtuuko 2-tason else silmukassa vasen ja oikea päittäin vain annaVase/Oikea metodeissa vai myös kierroissa?
-    public void korjaaLisays(Solmu z) {
+    private void korjaaLisays(Solmu z) {
         System.out.println("Aloitetaan korjaus solmulle: " + z.annaAvain());
         Solmu y;
         while (z.annaVanhempi().annaVari() == PUNAINEN) {
@@ -98,7 +98,7 @@ public class Puu {
         this.juuri.asetaVari(MUSTA);
     }
     
-    public void vasenKierto(Solmu x) {
+    private void vasenKierto(Solmu x) {
         System.out.println("Aloitetaan vasen kierto solmulle " + x.annaAvain() + "...");
         Solmu y = x.annaOikea();
         x.asetaOikea(y.annaVasen());
@@ -121,7 +121,7 @@ public class Puu {
     }
     
     // Peilattu ylläolevastavaihtamalla kaikki oikea-sanat vasen-sanoiksi ja toisinpäin
-    public void oikeaKierto(Solmu kierrettava) {
+    private void oikeaKierto(Solmu kierrettava) {
         System.out.println("Aloitetaan oikea kierto solmulle " + kierrettava.annaAvain() + "...");
         Solmu y = kierrettava.annaVasen();
         kierrettava.asetaVasen(y.annaOikea());
@@ -145,6 +145,120 @@ public class Puu {
     
     public Solmu annaJuuri(){
         return this.juuri;
+    }
+    
+    public Solmu poistaSolmu(Solmu z) {
+        Solmu y;
+        Solmu x;
+        if (z.annaVasen().annaAvain() == 0 || z.annaOikea().annaAvain() == 0) {
+            y = z;
+        } else {
+            y = seuraajaBinaarisessaHakupuussa(z);
+        }
+        if (y.annaVasen().annaAvain() != 0) {
+            x = y.annaVasen();
+        } else {
+            x = y.annaOikea();
+        }
+        x.asetaVanhempi(y.annaVanhempi());
+        if (y.annaVanhempi().annaAvain() == 0) {
+            this.juuri = x;
+        } else {
+            if (y.annaAvain() == y.annaVanhempi().annaVasen().annaAvain()) {
+                y.annaVanhempi().asetaVasen(x);
+            }
+            else {
+                y.annaVanhempi().asetaOikea(x);
+            }
+        }
+        if (y.annaAvain() != z.annaAvain()) {
+            z.asetaAvain(y.annaAvain());
+        }
+        if (y.annaVari() == MUSTA) {
+            korjaaPoistoPunamustapuusta(x);
+        }
+        return y;
+    }
+    
+    private Solmu seuraajaBinaarisessaHakupuussa(Solmu x) {
+        Solmu y;
+        if (x.annaOikea().annaAvain() != 0) {
+            return binaariseHakupuunMinimi(x.annaOikea());
+        }
+        y = x.annaVanhempi();
+        while (y.annaAvain() != 0 && x.annaAvain() == y.annaOikea().annaAvain()) {
+            x = y;
+            y = y.annaVanhempi();
+        }
+        return x;
+    }
+    
+    private Solmu binaariseHakupuunMinimi(Solmu x) {
+        if (x.annaAvain() != 0) {
+            while (x.annaVasen().annaAvain() != 0) {
+                x = x.annaVasen();
+            }
+            return x;
+        } else {
+            System.out.println("Puu tyhjä: minimiä ei ole määritelty. Funktion binaarisenHakupuunMinimi palautti NIL-solmun.");
+            return new Solmu();
+        }
+    }
+    
+    private void korjaaPoistoPunamustapuusta(Solmu x) {
+        Solmu w;
+        while (x.annaAvain() != this.juuri.annaAvain() && x.annaVari() == MUSTA) {
+            if (x.annaAvain() == x.annaVanhempi().annaVasen().annaAvain()) {
+                w = x.annaVanhempi().annaOikea();
+                if (w.annaVari() == PUNAINEN) {
+                    w.asetaVari(MUSTA); // Tapaus 1
+                    x.annaVanhempi().asetaVari(PUNAINEN);
+                    vasenKierto(x.annaVanhempi());
+                    w = x.annaVanhempi().annaOikea();
+                }
+                if (w.annaVasen().annaVari() == MUSTA && w.annaOikea().annaVari() == MUSTA) {
+                    w.asetaVari(PUNAINEN); // Tapaus 2
+                    x = x.annaVanhempi();
+                } else {
+                    if (w.annaOikea().annaVari() == MUSTA) {
+                        w.annaVasen().asetaVari(MUSTA); // Tapaus 3
+                        w.asetaVari(PUNAINEN);
+                        oikeaKierto(w);
+                        w = x.annaVanhempi().annaOikea();
+                    }
+                    w.asetaVari(x.annaVanhempi().annaVari());
+                    x.annaVanhempi().asetaVari(MUSTA);
+                    w.annaOikea().asetaVari(MUSTA);
+                    vasenKierto(x.annaVanhempi());
+                    x = this.juuri;
+                }
+            } else {
+                w = x.annaVanhempi().annaVasen();
+                if (w.annaVari() == PUNAINEN) {
+                    w.asetaVari(MUSTA);
+                    x.annaVanhempi().asetaVari(PUNAINEN);
+                    oikeaKierto(x.annaVanhempi());
+                    w = x.annaVanhempi().annaVasen();
+                }
+                if (w.annaOikea().annaVari() == MUSTA && w.annaVasen().annaVari() == MUSTA) {
+                    w.asetaVari(PUNAINEN);
+                    x = x.annaVanhempi();
+                } else {
+                    if (w.annaVasen().annaVari() == MUSTA) {
+                        w.annaOikea().asetaVari(MUSTA);
+                        w.asetaVari(PUNAINEN);
+                        vasenKierto(w);
+                        w = x.annaVanhempi().annaVasen();
+                    }
+                    w.asetaVari(x.annaVanhempi().annaVari());
+                    x.annaVanhempi().asetaVari(MUSTA);
+                    w.annaVasen().asetaVari(MUSTA);
+                    oikeaKierto(x.annaVanhempi());
+                    x = this.juuri;
+                }
+                x.asetaVari(MUSTA);
+            }
+        }
     }
     
     public void tulostaPuu(Solmu s) {
