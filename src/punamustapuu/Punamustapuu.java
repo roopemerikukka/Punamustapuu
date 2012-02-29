@@ -15,31 +15,26 @@ public class Punamustapuu {
      */
     public static void main(String[] args) {
         
-        int[] luvut ={1, 2, 3, 4};
+        // puuhun lisättävien Solmujen avaimet
+        int[] luvut ={3, 5, 2, 7, 6, 4};
         
-        System.out.println("Alustetaan puu alkiolla: " + luvut[0]);
+        // luodaan uusi Puu
         Puu puu = new Puu();
         
+        // lisätään puuhun Solmuja
         for (int i = 0; i < luvut.length; i++) {
             puu.lisaaSolmu(luvut[i]);
-            System.out.println();
-            puu.tulostaPuu();
-            System.out.println();
         }
         
-        System.out.println("Aloitetaan 3 poisto...");
-        puu.poistaSolmu(puu.etsiSolmu(3));
-        System.out.println("3 poistettu! Tulostetaan puu...");
-        System.out.println();
+        // tulostetaan puu Solmujen lisäyksen jälkeen
         puu.tulostaPuu();
-        System.out.println();
         
-//        System.out.println("Aloitetaan juuren poisto...");
-//        puu.poistaSolmu(puu.annaJuuri());
-//        System.out.println("Juuri poistettu! Tulostetaan puu...");
-//        System.out.println();
-//        puu.tulostaPuu();
-//        System.out.println();
+        // poistetaan puusta Solmu, jonka avain on 3
+        puu.poistaSolmu(puu.etsiSolmu(3));
+        
+        // tulostetaan puu poiston jälkeen
+        puu.tulostaPuu();
+
     }
     
 }
