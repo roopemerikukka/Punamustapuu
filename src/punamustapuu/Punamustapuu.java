@@ -28,18 +28,18 @@ public class Punamustapuu {
         }
         
         System.out.println("Aloitetaan 3 poisto...");
-        puu.poistaSolmu(puu.annaJuuri().annaOikea());
+        puu.poistaSolmu(puu.etsiSolmu(3));
         System.out.println("3 poistettu! Tulostetaan puu...");
         System.out.println();
         puu.tulostaPuu();
         System.out.println();
         
-        System.out.println("Aloitetaan juuren poisto...");
-        puu.poistaSolmu(puu.annaJuuri());
-        System.out.println("Juuri poistettu! Tulostetaan puu...");
-        System.out.println();
-        puu.tulostaPuu();
-        System.out.println();
+//        System.out.println("Aloitetaan juuren poisto...");
+//        puu.poistaSolmu(puu.annaJuuri());
+//        System.out.println("Juuri poistettu! Tulostetaan puu...");
+//        System.out.println();
+//        puu.tulostaPuu();
+//        System.out.println();
     }
     
 }

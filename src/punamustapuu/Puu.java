@@ -207,6 +207,7 @@ public class Puu {
     }
     
     private void korjaaPoistoPunamustapuusta(Solmu x) {
+        System.out.println("Aloitetaan poiston korjaaminen solmulla " + x.annaAvain() + "...");
         Solmu w;
         while (x.annaAvain() != this.juuri.annaAvain() && x.annaVari() == MUSTA) {
             if (x.annaAvain() == x.annaVanhempi().annaVasen().annaAvain()) {
@@ -220,20 +221,22 @@ public class Puu {
                 if (w.annaVasen().annaVari() == MUSTA && w.annaOikea().annaVari() == MUSTA) {
                     w.asetaVari(PUNAINEN); // Tapaus 2
                     x = x.annaVanhempi();
-                } else {
+                }
+                else {
                     if (w.annaOikea().annaVari() == MUSTA) {
                         w.annaVasen().asetaVari(MUSTA); // Tapaus 3
                         w.asetaVari(PUNAINEN);
                         oikeaKierto(w);
                         w = x.annaVanhempi().annaOikea();
                     }
-                    w.asetaVari(x.annaVanhempi().annaVari());
+                    w.asetaVari(x.annaVanhempi().annaVari()); // Tapaus 4
                     x.annaVanhempi().asetaVari(MUSTA);
                     w.annaOikea().asetaVari(MUSTA);
                     vasenKierto(x.annaVanhempi());
                     x = this.juuri;
                 }
-            } else {
+            }
+            else {
                 w = x.annaVanhempi().annaVasen();
                 if (w.annaVari() == PUNAINEN) {
                     w.asetaVari(MUSTA);
@@ -244,7 +247,8 @@ public class Puu {
                 if (w.annaOikea().annaVari() == MUSTA && w.annaVasen().annaVari() == MUSTA) {
                     w.asetaVari(PUNAINEN);
                     x = x.annaVanhempi();
-                } else {
+                }
+                else {
                     if (w.annaVasen().annaVari() == MUSTA) {
                         w.annaOikea().asetaVari(MUSTA);
                         w.asetaVari(PUNAINEN);
@@ -257,9 +261,23 @@ public class Puu {
                     oikeaKierto(x.annaVanhempi());
                     x = this.juuri;
                 }
-                x.asetaVari(MUSTA);
             }
         }
+        x.asetaVari(MUSTA);
+        System.out.println("Poiston aiheuttama epätasapaino ja värivirheet korjattu.");
+    }
+    
+    public Solmu etsiSolmu(int k) {
+        Solmu x = this.juuri;
+        while (x.annaAvain() != 0 && k != x.annaAvain()) {
+            if (k < x.annaAvain()) {
+                x = x.annaVasen();
+            }
+            else {
+                x = x.annaOikea();
+            }
+        }
+        return x;
     }
     
     private static final int SISENNYS_ASKEL = 6;
