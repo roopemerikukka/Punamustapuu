@@ -28,6 +28,7 @@ public class Punamustapuu {
         
         // tulostetaan puu Solmujen lisäyksen jälkeen
         puu.tulostaPuu();
+        System.out.println("\n------------------------------------------------\n");
         
         // poistetaan puusta Solmu, jonka avain on 3
         puu.poistaSolmu(puu.etsiSolmu(3));
