@@ -2,7 +2,7 @@ package punamustapuu;
 
 /**
  * Luokka, joka mallintaa punamustan puun solmua.
- * @author Joonas Salovaara && Roope Merikukka
+ * @author Joonas Salovaara && Roope Merikukka && Eero Suvanto
  */
 public class Solmu {
     

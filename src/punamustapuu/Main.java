@@ -1,8 +1,8 @@
 package punamustapuu;
 
 /**
- * 
- * @author Joonas Salovaara && Roope Merikukka
+ * Luokka, joka testaa luokkien Puu ja Solmu toimintaa.
+ * @author Joonas Salovaara && Roope Merikukka && Eero Suvanto
  */
 public class Main {
 
@@ -31,7 +31,5 @@ public class Main {
         
         // tulostetaan puu poiston jälkeen
         puu.tulostaPuu();
-
-    }
-    
+    }   
 }

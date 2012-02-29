@@ -1,8 +1,8 @@
 package punamustapuu;
 
 /**
- * 
- * @author Joonas Salovaara && Roope Merikukka
+ * Luokka, joka mallintaa punamustaa puuta ja sen toimintaa.
+ * @author Joonas Salovaara && Roope Merikukka && Eero Suvanto
  */
 public class Puu {
     
