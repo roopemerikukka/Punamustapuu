@@ -15,10 +15,15 @@ public class Puu {
     public final int PUNAINEN = 0; // Punaisen värin numerokoodi
     private static final int SISENNYS_ASKEL = 6; // Tulostuksen sisennyksen määrä
     
+    // Konstruktori
     public Puu(){
-        this.juuri = new Solmu();
+        this.juuri = new Solmu(); // Alustetaan puu NIL-Solmulla
     }
     
+    /**
+     * Lisätään Puuhun uusi Solmu annetusta avaimesta
+     * @param avain kuuluu Z+ != 0 
+     */
     public void lisaaSolmu(int avain) {
         Solmu uusi = new Solmu(avain);
         Solmu y = new Solmu();
@@ -47,6 +52,7 @@ public class Puu {
         korjaaLisays(uusi);
     }
     
+    // Korjataan Puuhun tehty lisäys
     private void korjaaLisays(Solmu z) {
         Solmu y;
         while (z.annaVanhempi().annaVari() == PUNAINEN) {
@@ -90,6 +96,7 @@ public class Puu {
         this.juuri.asetaVari(MUSTA);
     }
     
+    // Suoritetaan vasen kierto Solmulle x
     private void vasenKierto(Solmu x) {
         Solmu y = x.annaOikea();
         x.asetaOikea(y.annaVasen());
@@ -110,31 +117,33 @@ public class Puu {
         x.asetaVanhempi(y);
     }
     
-    // Peilattu ylläolevastavaihtamalla kaikki oikea-sanat vasen-sanoiksi ja toisinpäin
-    private void oikeaKierto(Solmu kierrettava) {
-        Solmu y = kierrettava.annaVasen();
-        kierrettava.asetaVasen(y.annaOikea());
+    // Suoritetaan oikea kierto Solmulle x
+    private void oikeaKierto(Solmu x) {
+        Solmu y = x.annaVasen();
+        x.asetaVasen(y.annaOikea());
         if (y.annaOikea().annaAvain() != 0) {
-          y.annaOikea().asetaVanhempi(kierrettava);  
+          y.annaOikea().asetaVanhempi(x);  
         }
-        y.asetaVanhempi(kierrettava.annaVanhempi());
-        if (kierrettava.annaVanhempi().annaAvain() == 0) {
+        y.asetaVanhempi(x.annaVanhempi());
+        if (x.annaVanhempi().annaAvain() == 0) {
             this.juuri = y;
         }
-        else if (kierrettava.annaAvain() == kierrettava.annaVanhempi().annaOikea().annaAvain()) {
-            kierrettava.annaVanhempi().asetaOikea(y);
+        else if (x.annaAvain() == x.annaVanhempi().annaOikea().annaAvain()) {
+            x.annaVanhempi().asetaOikea(y);
         }
         else {
-            kierrettava.annaVanhempi().asetaVasen(y);
+            x.annaVanhempi().asetaVasen(y);
         }
-        y.asetaOikea(kierrettava);
-        kierrettava.asetaVanhempi(y);
+        y.asetaOikea(x);
+        x.asetaVanhempi(y);
     }
     
+    // Palauttaa Puun juurisolmun
     public Solmu annaJuuri(){
         return this.juuri;
     }
     
+    // Poistetaan annettu Solmu z
     public Solmu poistaSolmu(Solmu z) {
         Solmu y;
         Solmu x;
@@ -168,6 +177,7 @@ public class Puu {
         return y;
     }
     
+    // Haetaan Solmun x seuraaja oikealta
     private Solmu seuraajaBinaarisessaHakupuussa(Solmu x) {
         Solmu y;
         if (x.annaOikea().annaAvain() != 0) {
@@ -181,6 +191,7 @@ public class Puu {
         return x;
     }
     
+    // Haetaan Puun Solmu, jolla on pienin avain
     private Solmu binaariseHakupuunMinimi(Solmu x) {
         if (x.annaAvain() != 0) {
             while (x.annaVasen().annaAvain() != 0) {
@@ -192,6 +203,7 @@ public class Puu {
         }
     }
     
+    // Korjataan mahdolliset virheet poiston jälkeen
     private void korjaaPoistoPunamustapuusta(Solmu x) {
         Solmu w;
         while (x.annaAvain() != this.juuri.annaAvain() && x.annaVari() == MUSTA) {
@@ -251,6 +263,7 @@ public class Puu {
         x.asetaVari(MUSTA);
     }
     
+    // Etsitään Solmu, jonka avain on k
     public Solmu etsiSolmu(int k) {
         Solmu x = this.juuri;
         while (x.annaAvain() != 0 && k != x.annaAvain()) {
@@ -264,12 +277,15 @@ public class Puu {
         return x;
     }
     
+    // Tulostaa puun aloittaen juuresta
     public void tulostaPuu(){
         apuTulostus(annaJuuri(), 0);
     }
     
+     // Apumetodi, joka tulostaa puun sivuttaissuunnassa aloittaen puun oikeasta reunasta
     public void apuTulostus(Solmu s, int sisennys){
         if(s == null){
+            // Jos puu on tyhjä, ei jatketa
             System.out.println("<tyhjä puu>");
             return;
         }
