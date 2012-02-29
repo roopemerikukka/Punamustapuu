@@ -15,7 +15,7 @@ public class Punamustapuu {
      */
     public static void main(String[] args) {
         
-        int[] luvut ={1, 2, 3, 5, 6, 7, 8, 9, 10};
+        int[] luvut ={1, 2, 3, 4};
         
         System.out.println("Alustetaan puu alkiolla: " + luvut[0]);
         Puu puu = new Puu();
@@ -27,12 +27,12 @@ public class Punamustapuu {
             System.out.println();
         }
         
-//        System.out.println("Aloitetaan 3 poisto...");
-//        puu.poistaSolmu(puu.etsiSolmu(3));
-//        System.out.println("3 poistettu! Tulostetaan puu...");
-//        System.out.println();
-//        puu.tulostaPuu();
-//        System.out.println();
+        System.out.println("Aloitetaan 3 poisto...");
+        puu.poistaSolmu(puu.etsiSolmu(3));
+        System.out.println("3 poistettu! Tulostetaan puu...");
+        System.out.println();
+        puu.tulostaPuu();
+        System.out.println();
         
 //        System.out.println("Aloitetaan juuren poisto...");
 //        puu.poistaSolmu(puu.annaJuuri());

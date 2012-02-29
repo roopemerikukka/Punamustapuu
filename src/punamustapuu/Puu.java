@@ -10,18 +10,16 @@ package punamustapuu;
  */
 public class Puu {
     
-    private Solmu juuri = new Solmu();
-    private final int MUSTA = 1;
-    private final int PUNAINEN = 0;
+    private Solmu juuri; // Puun juuri
+    public final int MUSTA = 1; // Mustan värin numerokoodi
+    public final int PUNAINEN = 0; // Punaisen värin numerokoodi
+    private static final int SISENNYS_ASKEL = 6; // Tulostuksen sisennyksen määrä
     
-    // Tyhjän puun konstruktori
     public Puu(){
-        
+        this.juuri = new Solmu();
     }
     
-    // INT ONLY, EIKÄ NOLLAA!
     public void lisaaSolmu(int avain) {
-        System.out.println("Aloitetaan solmun " + avain + " lisääminen...");
         Solmu uusi = new Solmu(avain);
         Solmu y = new Solmu();
         Solmu x = this.juuri;
@@ -47,15 +45,9 @@ public class Puu {
         uusi.asetaOikea(new Solmu());
         uusi.asetaVari(PUNAINEN);
         korjaaLisays(uusi);
-        System.out.println("Solmu lisätty.");
     }
     
-    // Vertailujen == syntaksia if ja while lauseissa täytyy miettiä, tuskin toimii,
-    // sillä tarkistaa mielestäni tällähetkellä ainoastaan sitä, onko kyseessä täysin sama olio,
-    // joka ei ikinä siis ole tosi? Pitäisikö toteuttaa myös se Comparable-rajapinta?
-    // Vaihtuuko 2-tason else silmukassa vasen ja oikea päittäin vain annaVase/Oikea metodeissa vai myös kierroissa?
     private void korjaaLisays(Solmu z) {
-        System.out.println("Korjataan lisäys solmulle " + z.annaAvain() + "...");
         Solmu y;
         while (z.annaVanhempi().annaVari() == PUNAINEN) {
             if (z.annaVanhempi().annaAvain() == z.annaVanhempi().annaVanhempi().annaVasen().annaAvain()) {
@@ -96,11 +88,9 @@ public class Puu {
             }
         }
         this.juuri.asetaVari(MUSTA);
-        System.out.println("Korjaus solmulle " + z.annaAvain() + " valmis.");
     }
     
     private void vasenKierto(Solmu x) {
-        System.out.println("Aloitetaan vasen kierto solmulle " + x.annaAvain() + "...");
         Solmu y = x.annaOikea();
         x.asetaOikea(y.annaVasen());
         if (y.annaVasen().annaAvain() != 0) {
@@ -118,12 +108,10 @@ public class Puu {
         }
         y.asetaVasen(x);
         x.asetaVanhempi(y);
-        System.out.println("Vasen kierto lopetettu.");
     }
     
     // Peilattu ylläolevastavaihtamalla kaikki oikea-sanat vasen-sanoiksi ja toisinpäin
     private void oikeaKierto(Solmu kierrettava) {
-        System.out.println("Aloitetaan oikea kierto solmulle " + kierrettava.annaAvain() + "...");
         Solmu y = kierrettava.annaVasen();
         kierrettava.asetaVasen(y.annaOikea());
         if (y.annaOikea().annaAvain() != 0) {
@@ -141,7 +129,6 @@ public class Puu {
         }
         y.asetaOikea(kierrettava);
         kierrettava.asetaVanhempi(y);
-        System.out.println("Oikea kierto lopetettu.");
     }
     
     public Solmu annaJuuri(){
@@ -201,13 +188,11 @@ public class Puu {
             }
             return x;
         } else {
-            System.out.println("Puu tyhjä: minimiä ei ole määritelty. Funktion binaarisenHakupuunMinimi palautti NIL-solmun.");
             return new Solmu();
         }
     }
     
     private void korjaaPoistoPunamustapuusta(Solmu x) {
-        System.out.println("Aloitetaan poiston korjaaminen solmulla " + x.annaAvain() + "...");
         Solmu w;
         while (x.annaAvain() != this.juuri.annaAvain() && x.annaVari() == MUSTA) {
             if (x.annaAvain() == x.annaVanhempi().annaVasen().annaAvain()) {
@@ -264,7 +249,6 @@ public class Puu {
             }
         }
         x.asetaVari(MUSTA);
-        System.out.println("Poiston aiheuttama epätasapaino ja värivirheet korjattu.");
     }
     
     public Solmu etsiSolmu(int k) {
@@ -279,8 +263,6 @@ public class Puu {
         }
         return x;
     }
-    
-    private static final int SISENNYS_ASKEL = 6;
     
     public void tulostaPuu(){
         apuTulostus(annaJuuri(), 0);

@@ -24,7 +24,7 @@ public class Solmu {
         this.vanhempi = null;
         this.vasen = null;
         this.oikea = null;
-        this.vari = this.PUNAINEN;
+        this.vari = PUNAINEN;
     }
     
     // NOLLA ON NIL, NÄIN.
