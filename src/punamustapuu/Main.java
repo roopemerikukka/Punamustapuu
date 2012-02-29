@@ -4,7 +4,7 @@ package punamustapuu;
  * 
  * @author Joonas Salovaara && Roope Merikukka
  */
-public class Punamustapuu {
+public class Main {
 
     /**
      * @param args the command line arguments
