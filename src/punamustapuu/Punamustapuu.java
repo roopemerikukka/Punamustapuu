@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package punamustapuu;
 
 /**
- *
- * @author Roope Merikukka & Joonas Salovaara
+ * 
+ * @author Joonas Salovaara && Roope Merikukka
  */
 public class Punamustapuu {
 
